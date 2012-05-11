@@ -3,11 +3,10 @@ package Perlsec::Helper;
 use strict;
 use base qw( Exporter );
 our @EXPORT=qw(say dsay stop);
-our @EXPORT_OK=qw(test stop var_print say dsay file_as_array write_to_file append_to_file run_command run_command_with_output url_as_array get_flag set_flag);
+our @EXPORT_OK=qw(stop var_print say dsay file_as_array write_to_file append_to_file run_command run_command_with_output url_as_array get_flag set_flag);
 
 #allows using module like: use Perlsec::Helper ':all';
 our %EXPORT_TAGS = ( 'all' => [ qw(
-test
 stop
 var_print
 say
