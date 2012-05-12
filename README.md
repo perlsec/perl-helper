@@ -41,38 +41,38 @@ Then pick a folder of those listed, and put the Perlsec folder in there.
 
 ## Functions
 
-**stop**
+**stop**:
 Stops execution, and posts debug message
 args:
 (optional) string, which is appended to debug message 
 
-**say**
+**say**:
 Like print, but adds a newline at the end of the output.
 
-**file_as_array**
+**file_as_array**:
 Does sanity checks for reading a file, reads it and returns the content as an array.
 
-**write_to_file**
+**write_to_file**:
 Does sanity checks for writing to a file,
 then takes the input and overwrites the file with it. If the file does not exist it is created.
 args:
 string, filename
 array/string, content in the file
 
-**append_to_file**
+**append_to_file**:
 Does sanity checks for opening and writing to a file, then appends the data at the end of the file. Will die if the file doesnt exist.
 args:
 string, filename
 array/string, content to append to the file
 
-**run_command**
+**run_command**:
 Runs a command, without returning the output.
 Returns nothing if everything is ok
 Dies on non-0 return value from the command and returns the output i there is any, or a generic failure message.
 args:
 string, the command to be run
 
-**run_command_with_output**
+**run_command_with_output**:
 Runs a command, and returns the output and the exit code. It lets the programmer handle any errors.
 Returns an array with two values.
 0 - The output of the command
@@ -80,14 +80,14 @@ Returns an array with two values.
 args:
 string, the command to be run
 
-**url_as_array**
+**url_as_array**:
 Uses commandline Curl to grab that output of a URl.
 Will die if Curl does not exist or the Curl command fails.
 Returns the data Curl got from the url as an array.
 args:
 string, the URL to get the data from
 
-**set_flag**
+**set_flag**:
 Used to set a simple value in a file in /tmp
 the can the be changed and read later.
 The name of the tmp file is based on the name of the script using the library.
@@ -98,7 +98,7 @@ args:
 string, flag/value name
 string, content/value to set
 
-**get_flag**
+**get_flag**:
 This function reads the value of a given flag.
 Returns nothing if the flag isn't found or the flag file doesnt exist.
 See set_flag for how the flag data is saved.
@@ -109,13 +109,13 @@ string, the name of the flag.
 ###Debug functions
 These functions will only be run if the DEBUG shell variable is set to something
 
-**var_print**
+**var_print**:
 Prints content of variable, using Data::Dumper.
 args:
 string, identifier for the output, f.x. variable name
 var/array/hash/obj/ref, to be printed
 
-**dsay**
+**dsay**:
 Like the say function, but will only output when the DEBUG shell-variable is set.
 
 
