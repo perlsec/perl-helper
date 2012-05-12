@@ -23,6 +23,7 @@ Once the library is installed, you can use it in a script like this:
 ```perl
 use Perlsec::Helper ':all';
 say "Helper works!";
+```
 
 ### Same dir installation
 Here you just need to put the Perlsec folder in the same place as the code that includes it.
@@ -32,6 +33,7 @@ To make the library availble for all scripts, we can install it in a Perl-librar
 To find all the places Perl will check for librarys, use this command:
 ```perl
 perl -le 'print foreach @INC'
+```
 
 Then pick a folder of those listed, and put the Perlsec folder in there.
 
@@ -123,10 +125,12 @@ Like the say function, but will only output when the DEBUG shell-variable is set
 The library can be loaded with all functions like.
 ```perl
 use Perlsec::Helper ':all';
+```
 
 Or you can choose to only load the commands you know you need.
 ```perl
 use Perlsec::Helper qw'say dsay stop';
+```
 
 
 ### Debug
@@ -134,6 +138,7 @@ Some functions, like dsay and var_print, are only active in debug mode.
 To activate debug mode for a script that has the helper loaded, simply set the shell variable DEBUG to something.
 ```bash
 DEBUG=true ./script.pl
+```
 
 ### Examples of function use
 ```perl
@@ -200,3 +205,5 @@ if($out4[1] != 0){
 else{
  say $out4[0];
 }
+```
+
