@@ -1,5 +1,14 @@
 package Perlsec::Helper;
 
+##
+#
+# Copyright 2012 Kim Jørgensen (http://perlsec.dk)
+#
+# Licensed under the MIT license
+# Redistribution of files must retain the above copyright notice
+#
+##
+
 use strict;
 use base qw( Exporter );
 our @EXPORT=qw(say dsay stop);
@@ -53,6 +62,7 @@ sub dsay($){
     &say("DEBUG: " . $_[0]);
  }
 }
+
 
 sub var_print($\[$@%&*]){
  #name/tag (string)

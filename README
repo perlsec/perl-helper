@@ -12,6 +12,31 @@ I opted not to write it object oriented, to make the use as straight-forward as 
 
 If any function can get in trouble, it will die so it can be caught instead of possibly failing silently.
 
+## Installation
+
+You can install the library in two ways, depending on how you want to ue it.
+
+I personally prefer to install it via the second option to have it available everywhere on the system.
+
+Once the library is installed, you can use it in a script like this:
+
+```perl
+use Perlsec::Helper ':all';
+say "Helper works!";
+
+### Same dir installation
+Here you just need to put the Perlsec folder in the same place as the code that includes it.
+
+### System-wide installation
+To make the library availble for all scripts, we can install it in a Perl-library location.
+To find all the places Perl will check for librarys, use this command:
+```perl
+perl -le 'print foreach @INC'
+
+Then pick a folder of those listed, and put the Perlsec folder in there.
+
+(I usually use the folder: /usr/local/lib/site_perl)
+
 ## Functions
 
 **stop**
@@ -94,4 +119,84 @@ Like the say function, but will only output when the DEBUG shell-variable is set
 
 ## Examples
 
+### Loading
+The library can be loaded with all functions like.
+```perl
+use Perlsec::Helper ':all';
 
+Or you can choose to only load the commands you know you need.
+```perl
+use Perlsec::Helper qw'say dsay stop';
+
+
+### Debug
+Some functions, like dsay and var_print, are only active in debug mode.
+To activate debug mode for a script that has the helper loaded, simply set the shell variable DEBUG to something.
+```bash
+DEBUG=true ./script.pl
+
+### Examples of function use
+```perl
+
+set_flag("fishy", "like tuna or something");
+say "flag is: " . get_flag("fishy");
+
+my @web_data = url_as_array("http://perlsec.dk");
+var_print('@web_data', @web_data);
+
+say("test message");
+
+stop("test");
+stop();
+
+dsay("test debug output");
+
+my @test_array = qw(one two three four five six seven eight nine ten);
+var_print("numbers array", @test_array);
+
+my %test_hash = (
+    test => "one",
+    test2 => "two"
+);
+var_print("hash test", %test_hash);
+
+my $test_var = "test var content";
+var_print("string test ", $test_var);
+
+
+
+#read a testfile
+my @testfile = file_as_array("/tmp/testfile");
+print "@testfile \n";
+
+#write content to a file
+my @test_content = ("testlinie 1\n", "linie2\n", "linie3\n", "linie4\n");
+var_print("content", @test_content);
+write_to_file("/tmp/testfile", @test_content);
+
+
+### testing command-functions without output if there is no error
+my $test_command_work = "cat /etc/passwd";
+my $out1 = run_command($test_command_work);
+say $out1 if ($out1);
+
+my $test_command_fail = "cat /etc/idontEXIstsss";
+my $out2 = run_command($test_command_fail);
+say $out2 if ($out2);
+
+## testing command-functions with output
+my @out3 = run_command_with_output($test_command_work);
+if($out3[1] != 0){
+ say "got an error!: $out3[0]";
+}
+else{
+ say $out3[0];
+}
+
+my @out4 = run_command_with_output($test_command_fail);
+if($out4[1] != 0){
+ say "got an error!: $out4[0]";
+}
+else{
+ say $out4[0];
+}
