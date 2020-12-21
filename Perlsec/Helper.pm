@@ -12,7 +12,7 @@ package Perlsec::Helper;
 use strict;
 use base qw( Exporter );
 our @EXPORT=qw(say dsay stop);
-our @EXPORT_OK=qw(stop var_print say dsay file_as_array write_to_file append_to_file run_command run_command_with_output url_as_array get_flag set_flag);
+our @EXPORT_OK=qw(stop var_print say dsay file_as_array write_to_file append_to_file run_command run_command_with_output url_as_array get_flag set_flag db_hash_as_insert);
 
 #allows using module like: use Perlsec::Helper ':all';
 our %EXPORT_TAGS = ( 'all' => [ qw(
@@ -28,6 +28,7 @@ run_command_with_output
 url_as_array
 get_flag
 set_flag
+db_hash_as_insert
 ) ] );
 
 ##### FLAGS
@@ -259,9 +260,36 @@ sub _get_flag_tmpfile(){
 
 ### /FLAG subs
 
+### DB functions
 
-#TODO
-# maybe use carp module? allows stacktraces
-# module test, in colors - hackbook #64
+sub db_hash_as_insert($$){
+        my $table_name = shift;
+        my $data_hash_ref = shift;
+        my $sql_fields;
+        my $sql_values;
+        foreach my $field( keys(%$data_hash_ref) ){
+                my $value = $$data_hash_ref{$field};
+                $sql_fields .= "$field, ";
+                #check if NULL or UUID value
+                if( !defined($value) ){
+                        $sql_values .= "NULL, "
+                }
+                if( $value eq 'UUID'){
+                        $sql_values .= "UUID(), ";
+                }
+                else{
+                        $sql_values .= "'$value', ";
+                }
+        }
+        #cut trailing comma and spave off of strings
+        $sql_values = substr($sql_values, 0,-2);
+        $sql_fields = substr($sql_fields, 0,-2);
+
+        my $sql = "INSERT INTO $table_name ($sql_fields) VALUES ($sql_values);";
+        return $sql;
+}
+
+### /DB functions
+
 
 1;
