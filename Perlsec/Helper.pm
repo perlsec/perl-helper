@@ -12,7 +12,7 @@ package Perlsec::Helper;
 use strict;
 use base qw( Exporter );
 our @EXPORT=qw(say dsay stop);
-our @EXPORT_OK=qw(stop var_print say dsay file_as_array write_to_file append_to_file run_command run_command_with_output url_as_array get_flag set_flag db_hash_as_insert);
+our @EXPORT_OK=qw(stop var_print say dsay file_as_array write_to_file append_to_file run_command run_command_with_output url_as_array get_flag set_flag db_hash_as_insert unixtime_now);
 
 #allows using module like: use Perlsec::Helper ':all';
 our %EXPORT_TAGS = ( 'all' => [ qw(
@@ -29,6 +29,7 @@ url_as_array
 get_flag
 set_flag
 db_hash_as_insert
+unixtime_now
 ) ] );
 
 ##### FLAGS
@@ -185,6 +186,19 @@ sub verify_command_exists($){
     }    
 }
 
+sub unixtime_now(){
+	if (!&verify_command_exists('date')){
+		die "No data command could be found for unixtime_now function";
+	}
+
+	my @unixtimestamp_cmd_output = &run_command_with_output('date +%s');
+	if($unixtimestamp_cmd_output[1] != 0){
+		die "Error on date execution in unixtime_now function: " . $unixtimestamp_cmd_output[0];
+	}
+	my $unixtimestamp = $unixtimestamp_cmd_output[0];
+	chomp($unixtimestamp);
+	return $unixtimestamp;
+}
 
 ### FLAG subs
 
