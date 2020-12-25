@@ -288,7 +288,7 @@ sub db_hash_as_insert($$){
                 if( !defined($value) ){
                         $sql_values .= "NULL, "
                 }
-                if( $value eq 'UUID'){
+                elsif( $value eq 'UUID'){
                         $sql_values .= "UUID(), ";
                 }
                 else{
